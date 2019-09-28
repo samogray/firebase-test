@@ -14,11 +14,26 @@ export const useAuth = () => {
 
 const useProvideAuth = () => {
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('authUser')))
+
+  useEffect(() => {
+    const unsubscribe = () => firebase.auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log('here', user)
+        setUser(user)
+      } else {
+        console.log('there', user)
+        setUser(false)
+        localStorage.removeItem('authUser')
+      }
+    })
+    return () => unsubscribe()
+ }, [])
 
   const signIn = () => {
     return firebase.auth().signInWithPopup(provider)
       .then((response) => {
+        localStorage.setItem('authUser', JSON.stringify(response.user))
         setUser(response.user)
         return response.user
       }).catch((error) => {
@@ -29,20 +44,10 @@ const useProvideAuth = () => {
   const signOut = () => {
     return firebase.auth().signOut().then(() => {
         setUser(false)
+        localStorage.removeItem('authUser')
       })
   }
 
-  useEffect(() => {
-     const unsubscribe = () => firebase.auth.onAuthStateChanged(user => {
-       if (user) {
-         setUser(user)
-       } else {
-         setUser(false)
-       }
-     })
-     return () => unsubscribe()
-  }, [])
-console.log(user)
   return {
     user,
     signIn,

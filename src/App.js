@@ -11,16 +11,20 @@ import './App.css'
 
 const Component = () => {
   const auth = useAuth()
-  return <div className="App">
-  <Container maxWidth="sm">
-    <Typography component="div" style={{backgroundColor: '#cfe8fc'}}>
+  return <div className="App" style={{
+    height: '100vh',
+    display: 'flex',
+    maxWidth: '600px',
+    margin: '0 auto',
+    padding: '16px 0',
+    }}>
       <Grid
         container
         direction="row"
         justify="center"
-        alignItems="center"
-        spacing={3}
-        style={{height: '100vh'}}
+        alignItems={auth.user ? 'flex-start' : 'center'}
+        spacing={4}
+        style={{width: '100%', backgroundColor: '#cfe8fc'}}
       >
         {auth.user ? (
           <Main />
@@ -30,8 +34,6 @@ const Component = () => {
           </Grid>
         )}
       </Grid>
-    </Typography>
-  </Container>
 </div>
 }
 
