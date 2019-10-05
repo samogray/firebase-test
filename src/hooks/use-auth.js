@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext, createContext} from 'react'
+import {addToUsersList} from '../components/data-base-actions'
 import firebase, {provider} from '../firebase'
 
 const authContext = createContext()
@@ -35,6 +36,7 @@ const useProvideAuth = () => {
       .then((response) => {
         localStorage.setItem('authUser', JSON.stringify(response.user))
         setUser(response.user)
+        addToUsersList(response.user)
         return response.user
       }).catch((error) => {
         console.log(error)
