@@ -4,6 +4,7 @@ import {useAuth} from '../../hooks/use-auth'
 import Grid from '@material-ui/core/Grid'
 import User from '../user'
 import UsersList from '../users-list'
+import MessageList from '../messages'
 
 const Main = () => {
   const auth = useAuth()
@@ -32,6 +33,9 @@ const Main = () => {
         xs={12}
         direction="row"
       >
+        <Grid item xs={12}>
+         <MessageList />
+        </Grid>
         <Grid item xs={12}>
          <UsersList />
         </Grid>

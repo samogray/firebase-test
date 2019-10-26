@@ -14,6 +14,7 @@ export const addToUsersList = user => {
       photoURL,
       email,
       refreshToken,
+      messages: [],
     })
   }
 }
